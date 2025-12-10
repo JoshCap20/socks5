@@ -28,3 +28,24 @@ impl TryFrom<u8> for AuthMethodCode {
         }
     }
 }
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(u8)]
+pub enum Command {
+    Connect = 0x01,
+    Bind = 0x02,
+    UdpAssociate = 0x03,
+}
+
+impl TryFrom<u8> for Command {
+    type Error = u8;
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0x01 => Ok(Self::Connect),
+            0x02 => Ok(Self::Bind),
+            0x03 => Ok(Self::UdpAssociate),
+            other => Err(other),
+        }
+    }
+}
