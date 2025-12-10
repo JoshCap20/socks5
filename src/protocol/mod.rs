@@ -1,7 +1,3 @@
 pub mod types;
 
-pub use types::{
-      SOCKS_VERSION,
-      RSV,
-      AuthMethodCode
-  };
+pub use types::{AddressType, AuthMethodCode, Command, RSV, ReplyCode, SOCKS_VERSION};
