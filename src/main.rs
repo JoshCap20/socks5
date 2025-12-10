@@ -1,7 +1,6 @@
-use tokio::io::AsyncReadExt;
 use tokio::net::TcpListener;
 
-use socks5::protocol::SOCKS5_DEFAULT_PORT;
+use socks5::protocol::{ClientGreeting, SOCKS5_DEFAULT_PORT};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -14,17 +13,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("New connection from {}", addr);
 
         tokio::spawn(async move {
-            let mut buf = [0; 1024];
-
-            match socket.read(&mut buf).await {
-                Ok(0) => return, // Connection closed
-                Ok(n) => {
-                    println!("Received {} bytes: {:02X?}", n, &buf[..n]);
-                    // TODO: Parse greeting, do auth, handle request
-                    // Connection closed for now
+            match ClientGreeting::read_from(&mut socket).await {
+                Ok(greeting) => {
+                    println!("Client greeting: {:?}", greeting);
+                    // TODO: Send server choice, handle auth, parse request
                 }
                 Err(e) => {
-                    eprintln!("Read error: {}", e);
+                    eprintln!("Failed to parse greeting: {}", e);
                 }
             }
         });
