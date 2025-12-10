@@ -1,8 +1,8 @@
-/// SOCKS5 protocol version
-pub const SOCKS_VERSION: u8 = 0x05;
+pub const SOCKS5_DEFAULT_PORT: u16 = 1080;
 
-/// Reserved byte
-pub const RSV: u8 = 0x00;
+pub const SOCKS5_VERSION: u8 = 0x05;
+
+pub const RESERVED_BYTE: u8 = 0x00;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[repr(u8)]

@@ -9,7 +9,7 @@ wip
 cargo run
 ```
 
-*Curl raw TCP*
+*Test curl with proxy*
 ```bash
-echo "hello" | nc 127.0.0.1 8080
+curl -x socks5://127.0.0.1:8080 http://example.com
 ```
