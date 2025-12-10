@@ -70,3 +70,23 @@ impl TryFrom<u8> for AddressType {
         }
     }
 }
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(u8)]
+pub enum ReplyCode {
+    Succeeded = 0x00,
+    GeneralFailure = 0x01,
+    ConnectionNotAllowed = 0x02,
+    NetworkUnreachable = 0x03,
+    HostUnreachable = 0x04,
+    ConnectionRefused = 0x05,
+    TtlExpired = 0x06,
+    CommandNotSupported = 0x07,
+    AddressTypeNotSupported = 0x08,
+}
+
+impl ReplyCode {
+    pub fn as_u8(self) -> u8 {
+        self as u8
+    }
+}
