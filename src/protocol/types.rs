@@ -49,3 +49,24 @@ impl TryFrom<u8> for Command {
         }
     }
 }
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(u8)]
+pub enum AddressType {
+    IPv4 = 0x01, // 4 bytes
+    Domain = 0x03, // 1 byte length + name
+    IPv6 = 0x04, // 16 bytes
+}
+
+impl TryFrom<u8> for AddressType {
+    type Error = u8;
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        match value {
+            0x01 => Ok(Self::IPv4),
+            0x03 => Ok(Self::Domain),
+            0x04 => Ok(Self::IPv6),
+            other => Err(other),
+        }
+    }
+}
